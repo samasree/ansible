@@ -1,0 +1,18 @@
+---
+- hosts: server2
+  user: root
+  tasks:
+  - name: install the telnet and httpd
+    yum : pkg={{item}} state=latest
+    with_items:
+         - telnet
+         - httpd
+         - lynx
+         - python
+  - name: pause
+    pause:
+       prompt: press enter to continue
+  - name: verify telnet was installed
+    raw: yum list installed > grep telnet > /root/play.log
+  - name: verify httpd was installed
+    raw: yum list installed > grep httpd > /root/play.log
